@@ -21,9 +21,9 @@ class BallManager(Node):
     SPAWN_BALL_DURATION = 20.0
     TOTAL_BALL_COUNT = 10
 
-    GAME_STARTED_DURATION = 30.0
-    GAME_STARTING_DURATION = 30.0
-    GAME_PAUSED_DURATION = 120.0
+    GAME_STARTED_DURATION = 5.0
+    GAME_STARTING_DURATION = 5.0
+    GAME_PAUSED_DURATION = 5.0
 
     MODEL_NAMES = [
         "zenith_camera",
@@ -95,7 +95,7 @@ class BallManager(Node):
         if self.robot_pose is not None:
             in_safe_region = self.is_robot_in_safe_region(self.robot_pose.position)
             if self.game_status == BallManagerStats.GAME_STARTED and not in_safe_region:
-                self.score -= 0.2
+                self.score -= 1.0
             elif self.game_status in [BallManagerStats.GAME_STARTED, BallManagerStats.GAME_STARTING] and in_safe_region:
                 self.score += 0.1
         self.stats_pub.publish(BallManagerStats(
@@ -329,7 +329,7 @@ class Ball(object):
 
 
 def main(args=None):
-    random.seed(22)
+    random.seed(777)
 
     rclpy.init(args=args)
     ball_manager = BallManager()
