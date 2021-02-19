@@ -38,6 +38,12 @@ namespace gazebo
 
     signals: void SetCollectedBalls(QString _string);
 
+    signals: void SetGameStatus(QString _string);
+
+    signals: void SetTimeLeft(QString _string);
+
+    signals: void SetRobotSafety(QString _string);
+
     protected: void Load(sdf::ElementPtr _sdf) override;
 
     /// \brief Node used to establish communication with gzserver.
