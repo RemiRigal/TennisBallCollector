@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot name="ball" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:macro name="sphere_link" params="name r mass:=0.1 inertia_ratio:=1.0 *origin">
+        <link name="${name}">
+            <collision>
+                <xacro:insert_block name="origin"/>
+                <geometry>
+                    <sphere radius="${r}"/>
+                </geometry>
+            </collision>
+            <visual>
+                <xacro:insert_block name="origin"/>
+                <geometry>
+                    <sphere radius="${r}"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="${mass}"/>
+                <xacro:insert_block name="origin"/>
+                <inertia ixx="${inertia_ratio*(2/3)*mass*r*r}" ixy="0.0" ixz="0.0"
+                         iyy="${inertia_ratio*(2/3)*mass*r*r}" iyz="0.0"
+                         izz="${inertia_ratio*(2/3)*mass*r*r}"/>
+            </inertial>
+        </link>
+    </xacro:macro>
+
+    <xacro:sphere_link name="ball_link" r="0.07" mass="0.2" inertia_ratio="0.01">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:sphere_link>
+
+    <gazebo reference="ball_link">
+        <material>Gazebo/Yellow</material>
+        <dampingFactor>0.0002</dampingFactor>
+        <collision>
+            <surface>
+                <bounce>
+                    <restitution_coefficient>0.8</restitution_coefficient>
+                    <threshold>0.01</threshold>
+                </bounce>
+                <contact>
+                    <ode>
+                        <max_vel>10</max_vel>
+                    </ode>
+                </contact>
+                <friction>
+                    <torsional>
+                        <coefficient>0.01</coefficient>
+                        <surface_radius>0.1</surface_radius>
+                        <use_patch_radius>false</use_patch_radius>
+                    </torsional>
+                </friction>
+            </surface>
+        </collision>
+        <mu1>100.0</mu1>
+        <mu2>100.0</mu2>
+        <kp>500000</kp>
+        <minDepth>0.001</minDepth>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="large_wz" filename="libInitialVelocityPlugin.so">
+            <linear>$(arg vel_x) $(arg vel_y) $(arg vel_z)</linear>
+            <angular>0 0 0</angular>
+        </plugin>
+    </gazebo>
+
+<!--    <gazebo>-->
+<!--        <plugin name="3dplot" filename="libLinkPlot3DPlugin.so">-->
+<!--            <frequency>60</frequency>-->
+<!--            <plot>-->
+<!--                <link>ball_link</link>-->
+<!--                <pose>0 0 0 0 0 0</pose>-->
+<!--                <material>Gazebo/White</material>-->
+<!--            </plot>-->
+<!--        </plugin>-->
+<!--    </gazebo>-->
+
+</robot>

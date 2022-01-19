@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+    <world name="default">
+        <scene>
+            <sky>
+                <clouds>
+                    <speed>12</speed>
+                </clouds>
+            </sky>
+            <grid>0</grid>
+            <origin_visual>0</origin_visual>
+        </scene>
+        <include>
+            <uri>model://sun</uri>
+        </include>
+        <include>
+            <uri>model://tennis_court</uri>
+        </include>
+        <include>
+            <pose>0 0 8 3.14159 1.57079 3.14159</pose>
+            <uri>model://zenith_camera</uri>
+        </include>
+
+        <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+            <update_rate>10</update_rate>
+        </plugin>
+        <physics type="ode">
+            <max_step_size>0.001</max_step_size>
+        </physics>
+
+        <gui>
+            <plugin name="sample" filename="libgui_tennis_court_overlay.so"/>
+            <camera name="camera">
+                <pose>-22.73 23.81 24.92 0 0.7 -0.76</pose>
+            </camera>
+        </gui>
+    </world>
+</sdf>
