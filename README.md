@@ -22,9 +22,22 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Membres
 
-- Maxime Legeay
+###### 
 
+=======
 ###### A compléter avec les membres du groupe.
+
+=======
+| Nom |
+| --- |
+| Samuel |
+| Hugo Sab |
+| Maxime Legeay |
+| Estelle ARRICAU |
+| Hugo PIQUARD |
+| [Antonin Betaille](https://github.com/Anton1B) |
+
+
 
 
 ### Gestion de projet
