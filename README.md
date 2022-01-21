@@ -22,6 +22,8 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Membres
 
+###### - [Antonin Betaille](https://github.com/Anton1B)
+
 ###### A compléter avec les membres du groupe.
 
 
