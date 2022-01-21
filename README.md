@@ -22,16 +22,16 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Membres
 
-###### - [Antonin Betaille](https://github.com/Anton1B)
-
 =======
-Hugo PIQUARD
+
 ###### A compléter avec les membres du groupe.
 | Nom |
 | --- |
 | Samuel |
-Hugo Sab
-- Maxime Legeay
+| Hugo Sab |
+| Maxime Legeay |
+| Hugo PIQUARD |
+| [Antonin Betaille](https://github.com/Anton1B) |
 
 
 
