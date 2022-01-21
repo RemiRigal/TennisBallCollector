@@ -22,6 +22,8 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Membres
 
+- Maxime Legeay
+
 ###### A compléter avec les membres du groupe.
 
 
