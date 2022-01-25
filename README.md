@@ -42,7 +42,7 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Gestion de projet
 
-###### A compléter avec le lien vers votre [Taiga](https://taiga.io).
+###### Lien vers le [Taiga](https://tree.taiga.io/project/hugopiq-vadrouilletbc/backlog).
 
 
 
