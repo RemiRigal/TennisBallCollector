@@ -9,6 +9,25 @@ def frame_to_center(x, y, L, H):
 
 	return x_c, y_c
 
+def frame_back(x_c, y_c, L, H):
+	
+	x = int((x_c+1)*(L/2))
+
+	y = int((-y_c+1)*(H/2))
+
+	return x, y
+
+def draw_boxes_from_center_coord(image, boxes, color = (0,255,0), width = 5):
+	for box in boxes:
+		x_c, y_c, w_n, h_n = box[:4]
+		x, y = frame_back(x_c, y_c, image.shape[1], image.shape[0])
+		w, h = int(w_n*(image.shape[1]/2)), int(h_n*(image.shape[0]/2))
+		cv2.rectangle(image,(x,y),(x+w,y+h),color,width)
+
+def draw_boxes(image, boxes, color = (0,255,0), width = 5):
+	for box in boxes:
+		x, y, w, h = box
+		cv2.rectangle(image,(x,y),(x+w,y+h),color,width)
 
 def detect(image, rgb_filter):
 	
@@ -17,7 +36,7 @@ def detect(image, rgb_filter):
 
 	"""
 
-	nb_min_points_contours = 4
+	nb_min_points_contours = 3
 	
 	mask = cv2.GaussianBlur(image, (3,3), 0)
 	
@@ -29,8 +48,7 @@ def detect(image, rgb_filter):
 	cnts = imutils.grab_contours(cnts)
 
 	objects = []
-	print(mask.shape)
-	
+
 	if len(cnts) > 0 :
 
 		for cnt in cnts :
@@ -38,23 +56,21 @@ def detect(image, rgb_filter):
 			if len(cnt) > nb_min_points_contours:
 				
 				x, y, w, h = cv2.boundingRect(cnt)
-				
-				cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),5)
 
 				x_center, y_center = frame_to_center(x, y, mask.shape[1], mask.shape[0])
 
-				objects.append((x_center, y_center, w, h))
-
-				print(x, y, " to ", x_center, y_center)
+				objects.append((x_center, y_center, round(w/(mask.shape[1]/2),4), round(h/(mask.shape[0]/2),4)))
 
 	return mask, objects
 
 
-def detect_balls(image, rgb_filter = (0, 90, 0, 255, 255, 50)): 
+def detect_balls(image, rgb_filter = (81, 102, 0, 148, 147, 60)): # (0, 90, 0, 255, 255, 50)
 	return detect(image, rgb_filter)
+
 
 def detect_zones(image, rgb_filter = (0, 0, 0, 255, 100, 50)):
 	return detect(image, rgb_filter)
+
 
 def show_img(name, img, device = "Ubuntu"):
 

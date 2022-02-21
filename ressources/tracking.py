@@ -11,101 +11,82 @@ Pour chaque nouvelles balles :
 		break
 
 
-
-
-
 test if in orange square
 
 """
 
 import cv2
 
-from detection import detect_balls, draw_boxes_from_center_coord, show_img
+from detection import detect_balls, detect_zones, draw_boxes_from_center_coord, show_img
 
-
-def callback(value):
-	pass
-
-def setup_trackbars(range_filter,image_shape):
-	cv2.namedWindow("Trackbars", 0)
-	for j in range_filter:
-		for i in ["MIN", "MAX"]:
-			v = 0 if i == "MIN" else image_shape[0 if j == "X" else 1]
-			cv2.createTrackbar("%s_%s" % (j, i), "Trackbars", v, image_shape[0 if j == "X" else 1], callback)
-
-def get_trackbar_values(range_filter):
-	values = []
-
-	for i in ["MIN", "MAX"]:
-		for j in range_filter:
-			v = cv2.getTrackbarPos("%s_%s" % (j, i), "Trackbars")
-			values.append(v)
-
-	return values
-
-def get_image_coord(image):
-	
-	setup_trackbars("XY",image.shape)
-	print("Press K when finished")
-	while True:
-		x_min, y_min, x_max, y_max = get_trackbar_values("XY")
-		
-		if x_min < x_max and y_min < y_max :
-			cv2.imshow("Find keyboard", image[x_min:x_max,y_min:y_max])
-		else :
-			print("Invalide value please respect x_max > x_min and y_max > y_min")
-		
-		if cv2.waitKey(1) & 0xFF is ord('k'):
-			cv2.destroyAllWindows()
-			break
-	return x_min, x_max, y_min, y_max
 
 def ball_in_balls(ball_to_test, balls, proportion_size_box_validation):
 	test = False
 	k = 0 
 	for ball in balls :
-		if is_the_same_ball(ball_to_test, ball, proportion_size_box_validation):
+		if ball_in_the_box(ball_to_test, ball, proportion_size_box_validation):
 			test = True
 			break
 		k += 1
 	return k, test
 
 
-def is_the_same_ball(new_ball, last_ball, psbv):
-	valid_x = (last_ball[0] - last_ball[2]/2*psbv <= new_ball[0] <= last_ball[0] + last_ball[2]/2*psbv)
-	valid_y = (last_ball[1] - last_ball[3]/2*psbv <= new_ball[1] <= last_ball[1] + last_ball[3]/2*psbv)
+def ball_in_zones(ball, zones, psbv):
+	ball_in_zone = False
+	for zone in zones:
+		ball_in_zone |= ball_in_the_box(ball, zone, psbv)
+	return ball_in_zone
+
+
+def ball_in_the_box(ball, box, psbv):
+	valid_x = (box[0] - box[2]/2*psbv <= ball[0] <= box[0] + box[2]/2*psbv)
+	valid_y = (box[1] - box[3]/2*psbv <= ball[1] <= box[1] + box[3]/2*psbv)
 
 	return valid_x and valid_y
+
 
 def track_balls(t, image, last_balls, valid_balls):
 
 	ball_img, new_balls = detect_balls(image)
+	show_img("mask", ball_img)
 	print(new_balls)
 
+	zone_img, zones = detect_zones(image)
+
+	updated_valid_balls = []
+
 	for new_b in new_balls:
-		_, new_ball_in_last_balls = ball_in_balls(new_b, last_balls, 0.5)
+
+		new_ball_in_zones = ball_in_zones(new_b, zones, 1)
+
+		if new_ball_in_zones :
+			continue
+
+		_, new_ball_in_last_balls = ball_in_balls(new_b, last_balls, 1)
 		
 		if new_ball_in_last_balls:
 
-			indice_valid_ball, new_ball_in_valid_balls = ball_in_balls(new_b, valid_balls, 1.5)
+			indice_valid_ball, new_ball_in_valid_balls = ball_in_balls(new_b, valid_balls, 1)
 
 			if new_ball_in_valid_balls:
-				valid_balls[indice_valid_ball] = (new_b[0], new_b[1], new_b[2], new_b[3], valid_balls[indice_valid_ball][4])
+				updated_valid_balls.append((new_b[0], new_b[1], new_b[2], new_b[3], valid_balls[indice_valid_ball][4]))
 
 			else:
 
-				valid_balls.append((new_b[0], new_b[1], new_b[2], new_b[3], t))
+				updated_valid_balls.append((new_b[0], new_b[1], new_b[2], new_b[3], t))
 
-	return valid_balls, new_balls[:]
+	return updated_valid_balls, new_balls[:]
 
 
 def num_to_str(num):
+
 	if num//100 > 0:
 		return str(num)
 	elif num//10 > 0:
 		return "0" + str(num)
 	else:
 		return "00" + str(num)
+
 
 if __name__ == "__main__":
 
@@ -118,6 +99,8 @@ if __name__ == "__main__":
 	i = 0
 
 	dt = 0.5
+
+	end = False
 
 	for filename in range(1,102):
 
@@ -134,7 +117,6 @@ if __name__ == "__main__":
 
 		i += 1
 
-
 		draw_boxes_from_center_coord(frame, last_detected_balls, (0,0,255), 1)
 
 		draw_boxes_from_center_coord(frame, valid_detected_balls, (0,255,0), 1)
@@ -142,8 +124,15 @@ if __name__ == "__main__":
 		show_img("frame", frame)
 
 		while True:
-			if cv2.waitKey(1) & 0xFF is ord('q'):
-				cv2.destroyAllWindows()
+			key = cv2.waitKey(1) & 0xFF 
+			if key is ord('q'):
+				end = True
 				break
+			elif key is ord('d'):
+				break
+
+		if end:
+			cv2.destroyAllWindows()
+			break
 
 		
