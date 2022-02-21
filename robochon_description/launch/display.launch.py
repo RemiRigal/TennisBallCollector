@@ -8,6 +8,7 @@ from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
+
 def generate_launch_description():
     pkg_share = launch_ros.substitutions.FindPackageShare(package='robochon_description').find('robochon_description')
     default_model_path = os.path.join(pkg_share, 'urdf', 'robochon.urdf.xacro')
