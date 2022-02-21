@@ -36,7 +36,7 @@ def detect(image, rgb_filter):
 
 	"""
 
-	nb_min_points_contours = 4
+	nb_min_points_contours = 3
 	
 	mask = cv2.GaussianBlur(image, (3,3), 0)
 	
@@ -48,8 +48,7 @@ def detect(image, rgb_filter):
 	cnts = imutils.grab_contours(cnts)
 
 	objects = []
-	#print(mask.shape)
-	
+
 	if len(cnts) > 0 :
 
 		for cnt in cnts :
@@ -57,23 +56,21 @@ def detect(image, rgb_filter):
 			if len(cnt) > nb_min_points_contours:
 				
 				x, y, w, h = cv2.boundingRect(cnt)
-				
-				cv2.rectangle(mask,(x,y),(x+w,y+h),(0,255,0),5)
 
 				x_center, y_center = frame_to_center(x, y, mask.shape[1], mask.shape[0])
 
 				objects.append((x_center, y_center, round(w/(mask.shape[1]/2),4), round(h/(mask.shape[0]/2),4)))
 
-				#print(x, y, " to ", x_center, y_center)
-
 	return mask, objects
 
 
-def detect_balls(image, rgb_filter = (0, 90, 0, 255, 255, 50)): 
+def detect_balls(image, rgb_filter = (81, 102, 0, 148, 147, 60)): # (0, 90, 0, 255, 255, 50)
 	return detect(image, rgb_filter)
+
 
 def detect_zones(image, rgb_filter = (0, 0, 0, 255, 100, 50)):
 	return detect(image, rgb_filter)
+
 
 def show_img(name, img, device = "Ubuntu"):
 
