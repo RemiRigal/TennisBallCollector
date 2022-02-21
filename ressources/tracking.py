@@ -66,7 +66,7 @@ def track_balls(t, image, last_balls, valid_balls):
 		
 		if new_ball_in_last_balls:
 
-			indice_valid_ball, new_ball_in_valid_balls = ball_in_balls(new_b, valid_balls, 2)
+			indice_valid_ball, new_ball_in_valid_balls = ball_in_balls(new_b, valid_balls, 1)
 
 			if new_ball_in_valid_balls:
 				updated_valid_balls.append((new_b[0], new_b[1], new_b[2], new_b[3], valid_balls[indice_valid_ball][4]))
