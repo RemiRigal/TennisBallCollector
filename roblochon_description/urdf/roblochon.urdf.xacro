@@ -11,8 +11,9 @@
   <xacro:property name="wheel_ygap" value="0.025" />
   <xacro:property name="wheel_zoff" value="0.1" />
   <xacro:property name="wheel_xoff" value="0.36" />
-
+  <xacro:property name="caster_radius" value="${(wheel_radius+wheel_zoff-(base_height/2))}" />
   <xacro:property name="caster_xoff" value="${base_length/3}" />
+  <!-- <xacro:property name="caster_xoff" value="${0.9*base_length/2}" /> -->
   <xacro:property name="camera" value="0.05" /> <!-- Size of square 'camera' box -->
   <xacro:property name="axel_offset" value="0.1" />
 
@@ -138,43 +139,42 @@
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" />
 
 
-  <!-- Caster Wheel -->
-  <link name="front_caster">
-    <visual>
-      <geometry>
-        <sphere radius="${(wheel_radius+wheel_zoff-(base_height/2))}" />
-      </geometry>
-      <material name="Cyan">
-        <color rgba="0 1.0 1.0 1.0" />
-      </material>
-    </visual>
+  <xacro:macro name="front_caster" params="prefix y_reflect link_daddy">
+    <link name="front_caster_${prefix}">
+      <visual>
+        <geometry>
+          <sphere radius="${caster_radius}" />
+        </geometry>
+        <material name="Cyan">
+          <color rgba="0 1.0 1.0 1.0" />
+        </material>
+      </visual>
 
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <sphere radius="${caster_radius}" />
+        </geometry>
+      </collision>
+      <xacro:sphere_inertia m="0.5" r="${caster_radius}" />
+    </link>
+    <gazebo reference="front_caster_${prefix}">
+      <mu1>0.01</mu1>
+      <mu2>0.01</mu2>
+      <visual>
+        <material>Gazebo/White</material>
+      </visual>
+    </gazebo>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <sphere radius="${(wheel_radius+wheel_zoff-(base_height/2))}" />
-      </geometry>
-    </collision>
+    <joint name="caster_joint_${prefix}" type="fixed">
+      <parent link="${link_daddy}" />
+      <child link="front_caster_${prefix}" />
+      <origin xyz="${caster_xoff} ${y_reflect*0.7*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
+    </joint>
+  </xacro:macro>
 
-    <xacro:sphere_inertia m="0.5" r="${(wheel_radius+wheel_zoff-(base_height/2))}" />
-
-  </link>
-
-  <!-- Adding slippery mate5rial -->
-  <gazebo reference="front_caster">
-    <mu1>0.01</mu1>
-    <mu2>0.01</mu2>
-    <visual>
-      <material>Gazebo/White</material>
-    </visual>
-  </gazebo>
-
-  <joint name="caster_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="front_caster" />
-    <origin xyz="${caster_xoff} 0.0 ${-(base_height/2)}" rpy="0 0 0" />
-  </joint>
+  <xacro:front_caster prefix="front_left" link_daddy="base_link" y_reflect="1" />
+  <xacro:front_caster prefix="front_right" link_daddy="base_link" y_reflect="-1" />
 
 
   <!-- Gripper -->
@@ -191,10 +191,10 @@
       </visual>
       <collision>
         <geometry>
-          <box size="${gripper_length} ${gripper_width} ${gripper_height}" />
+          <box size="${gripper_length*lenght_x} ${gripper_width} ${gripper_height}" />
         </geometry>
       </collision>
-      <xacro:gripper_inertia m="2" w="${gripper_width}" d="${gripper_length}" h="${gripper_height}" />
+      <xacro:gripper_inertia m="2" w="${gripper_width*lenght_x}" d="${gripper_length}" h="${gripper_height}" />
     </link>
 
     <joint name="${prefix}_joint" type="fixed">
