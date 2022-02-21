@@ -38,7 +38,7 @@ def generate_launch_description():
                       executable='spawn_entity.py',
                       name='urdf_spawner',
                       output='screen',
-                      arguments=["-topic", "/robot_description", "-entity", "robochon", "-y", "3.0"])
+                      arguments=["-topic", "/robot_description", "-entity", "robochon", "-y", "3.0", "-z", "0.2"])
 
     return LaunchDescription([
         sim_time_arg,
