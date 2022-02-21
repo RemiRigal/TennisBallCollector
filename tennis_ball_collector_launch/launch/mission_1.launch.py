@@ -9,6 +9,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node, PushRosNamespace
 from launch.conditions import IfCondition
 
+
 def generate_launch_description():
     pkg_share = get_package_share_directory('tennis_ball_collector_launch')
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
