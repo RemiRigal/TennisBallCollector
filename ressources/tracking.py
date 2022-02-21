@@ -119,6 +119,8 @@ if __name__ == "__main__":
 
 	dt = 0.5
 
+	end = False
+
 	for filename in range(1,102):
 
 		frame = cv2.imread(folder_path+num_to_str(filename)+".png")
@@ -134,7 +136,6 @@ if __name__ == "__main__":
 
 		i += 1
 
-
 		draw_boxes_from_center_coord(frame, last_detected_balls, (0,0,255), 1)
 
 		draw_boxes_from_center_coord(frame, valid_detected_balls, (0,255,0), 1)
@@ -142,8 +143,15 @@ if __name__ == "__main__":
 		show_img("frame", frame)
 
 		while True:
-			if cv2.waitKey(1) & 0xFF is ord('q'):
-				cv2.destroyAllWindows()
+			key = cv2.waitKey(1) & 0xFF 
+			if key is ord('q'):
+				end = True
 				break
+			elif key is ord('d'):
+				break
+
+		if end: 
+			cv2.destroyAllWindows()
+			break
 
 		
