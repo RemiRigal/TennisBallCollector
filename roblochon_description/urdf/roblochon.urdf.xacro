@@ -196,6 +196,13 @@
       </collision>
       <xacro:gripper_inertia m="2" w="${gripper_width*lenght_x}" d="${gripper_length}" h="${gripper_height}" />
     </link>
+    <gazebo reference="${prefix}_link">
+      <mu1>1.4</mu1>
+      <mu2>1.4</mu2>
+      <visual>
+        <material>Gazebo/White</material>
+      </visual>
+    </gazebo>
 
     <joint name="${prefix}_joint" type="fixed">
       <parent link="${link_daddy}" />
@@ -209,8 +216,8 @@
   <xacro:gripper prefix="gripper_hor" x_reflect="-2" y_reflect="0" z_reflect="1" z_rotation="1.57" lenght_x="0.5" link_daddy="base_link" />
 
 
-  <xacro:gripper prefix="gripper_l_front" x_reflect="2" y_reflect="-0.5" z_reflect="0" z_rotation="0.5" lenght_x="0.5" link_daddy="gripper_l_link" />
-  <xacro:gripper prefix="gripper_r_front" x_reflect="2" y_reflect="0.5" z_reflect="0" z_rotation="-0.5" lenght_x="0.5" link_daddy="gripper_r_link" />
+  <xacro:gripper prefix="gripper_l_front" x_reflect="1.7" y_reflect="-0.45" z_reflect="0" z_rotation="0.5" lenght_x="0.5" link_daddy="gripper_l_link" />
+  <xacro:gripper prefix="gripper_r_front" x_reflect="1.7" y_reflect="0.45" z_reflect="0" z_rotation="-0.5" lenght_x="0.5" link_daddy="gripper_r_link" />
 
 
   <!-- LIDAR -->
