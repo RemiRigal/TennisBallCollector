@@ -7,34 +7,40 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Dépendences
 
-###### A compléter avec la/les dépendences.
-
+###### À compléter avec la/les dépendences.
+```bash
+sudo apt install ros-<ROS-DISTRO>-gazebo-* ros-<ROS-DISTRO>-joint-state-publisher ros-<ROS-DISTRO>-joint-state-publisher-gui 
+```
 
 ### Démarrer la simulation
 
-###### A compléter avec la/les commande(s) à lancer.
+###### À compléter avec la/les commande(s) à lancer.
 ```bash
-# TODO
+cd ros2_workspace
+colcon build --symlink-install
+source install/setup.bash
+```
+Dans un terminal :
+```bash
+ros2 launch tennis_court tennis_court.launch.py
 ```
 
+Dans un autre terminal
+```bash
+ros2 launch tennis_ball_collector_launch mission_1.launch.py
+```
 
 ## Groupe
 
 ### Membres
 
-###### 
-
-=======
-###### A compléter avec les membres du groupe.
-
-=======
-| Nom |
-| --- |
-| Samuel |
-| Hugo Sab |
-| Maxime Legeay |
-| Estelle ARRICAU |
-| Hugo PIQUARD |
+| Nom                                            |
+|------------------------------------------------|
+| [Samuel Prouten](https://github.com/samprt)    |
+| Hugo Sab                                       |
+| Maxime Legeay                                  |
+| Estelle ARRICAU                                |
+| Hugo PIQUARD                                   |
 | [Antonin Betaille](https://github.com/Anton1B) |
 
 
