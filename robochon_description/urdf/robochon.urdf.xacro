@@ -61,18 +61,18 @@
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}" />
       </geometry>
-      <material name="Cyan">
-        <color rgba="0 1.0 1.0 1.0" />
-      </material>
     </visual>
     <collision>
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}" />
       </geometry>
     </collision>
-
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}" />
   </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
 
 
   <!-- Robot Footprint -->
@@ -126,7 +126,11 @@
       <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}" />
 
     </link>
-
+    <gazebo reference="${prefix}_link">
+      <mu1>0.01</mu1>
+      <mu2>0.01</mu2>
+      <material>Gazebo/Grey</material>
+    </gazebo>
     <joint name="${prefix}_joint" type="continuous">
       <parent link="base_link" />
       <child link="${prefix}_link" />
@@ -161,9 +165,6 @@
     <gazebo reference="front_caster_${prefix}">
       <mu1>0.01</mu1>
       <mu2>0.01</mu2>
-      <visual>
-        <material>Gazebo/White</material>
-      </visual>
     </gazebo>
 
     <joint name="caster_joint_${prefix}" type="fixed">
@@ -176,6 +177,14 @@
   <xacro:front_caster prefix="front_left" link_daddy="base_link" y_reflect="1" />
   <xacro:front_caster prefix="front_right" link_daddy="base_link" y_reflect="-1" />
 
+  <gazebo reference="front_caster_front_left">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <gazebo reference="front_caster_front_right">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
 
   <!-- Gripper -->
   <xacro:macro name="gripper" params="prefix x_reflect y_reflect z_reflect z_rotation lenght_x link_daddy">
@@ -185,9 +194,6 @@
         <geometry>
           <box size="${gripper_length*lenght_x} ${gripper_width} ${gripper_height}" />
         </geometry>
-        <material name="Cyan">
-          <color rgba="0 1.0 1.0 1.0" />
-        </material>
       </visual>
       <collision>
         <geometry>
@@ -199,9 +205,7 @@
     <gazebo reference="${prefix}_link">
       <mu1>1.4</mu1>
       <mu2>1.4</mu2>
-      <visual>
-        <material>Gazebo/White</material>
-      </visual>
+      <material>Gazebo/Grey</material>
     </gazebo>
 
     <joint name="${prefix}_joint" type="fixed">
@@ -273,7 +277,6 @@
       <geometry>
         <box size="${camera} ${camera} ${camera}" />
       </geometry>
-      <material name="red" />
     </visual>
 
     <inertial>
