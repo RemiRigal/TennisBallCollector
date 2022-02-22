@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 from detection import *
 import time
 
+import time
+
+
 
 def longueur (x,y, ordre):
     i = ordre[-1]
@@ -39,7 +42,9 @@ def n_permutation(x,y, miniter):
     bordre = ordre.copy()
     d0 = longueur(x,y,ordre)
     for i in range(0,20):
+
         #print("iteration",i, "d=",d0)
+
         random.shuffle(ordre)
         ordre = permutation_rnd (x,y,ordre, 20)
         d = longueur(x,y,ordre)
@@ -62,6 +67,7 @@ if __name__ == "__main__":
     #y = [ random.random() for _ in range(n) ]
     
     #plt.plot(x,y,"o")
+
 
     i = 0
     #x = [-1, 1]
@@ -110,6 +116,7 @@ if __name__ == "__main__":
 
     
     
+
 
 
     while True:
