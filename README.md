@@ -1,3 +1,4 @@
+<img src="https://forthebadge.com/images/badges/made-with-python.svg" />
 # Tennis Ball Collector
 
 Ceci est un template de dépôt Git pour le cours d'ingénierie système et modélisation robotique à l'ENSTA Bretagne en 2021.
@@ -54,7 +55,34 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 
 ## Structure du dépôt
 
-Ce dépôt doit être cloné dans le dossier `src` d'un workspace ROS 2.
+```
+your_folder/
+│
+└───UE52-VS-IK/
+│   │   setup_pynaoqi.bash
+│   │
+│   └───external-software/
+|   |   └───naolibs/
+|   |   └───naoqi-sdk-2.1.4.13-linux64/
+|   |   └───pynaoqi-python2.7-2.1.4.13-linux64/
+|   |   └───V-REP_PRO_EDU_V3_6_2_Ubuntu18_04/
+│   |    │   vrep.sh
+│   |    │   ...
+|   |
+|   └───ik/
+|   |   └───py/
+|   |   └───scenes/
+|   |
+|   └───imgs/
+|   |   └───naorealimgs/
+|   |   └───naosimimgs/
+|   |
+|   └───vs/
+|   |   └───py/
+|   |   └───scenes/
+│   
+└───pynaoqi-python-2.7-naoqi-1.14-linux64/
+    │   ...
 
 ### Package `tennis_court`
 
