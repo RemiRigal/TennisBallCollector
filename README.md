@@ -58,10 +58,10 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 ```
 your_folder/
 │
-└───UE52-VS-IK/
-│   │   setup_pynaoqi.bash
+└───TennisBallCollector/
+│   │   
 │   │
-│   └───external-software/
+│   └───compute_trajectory/
 |   |   └───naolibs/
 |   |   └───naoqi-sdk-2.1.4.13-linux64/
 |   |   └───pynaoqi-python2.7-2.1.4.13-linux64/
@@ -69,20 +69,42 @@ your_folder/
 │   |    │   vrep.sh
 │   |    │   ...
 |   |
-|   └───ik/
+|   └───docs/
 |   |   └───py/
 |   |   └───scenes/
 |   |
-|   └───imgs/
+|   └───interfaces/
 |   |   └───naorealimgs/
 |   |   └───naosimimgs/
 |   |
-|   └───vs/
+|   └───reports/
 |   |   └───py/
 |   |   └───scenes/
-│   
-└───pynaoqi-python-2.7-naoqi-1.14-linux64/
-    │   ...
+│   |
+└───ressources/
+|   |
+│   |
+└───roblochon_gazebo/
+|   |
+│   |
+└───robochon_description/
+|   |
+│   |
+└───sam_bot_description/
+|   |
+│   |
+└───tennis_ball_collector_launch/
+|   |
+│   |
+└───tennis_ball_detector/
+|   |
+│   |
+└───tennis_court/
+|   |
+│   |
+└───vadrouilleur_description/
+|   |
+│   |
 ```
 ### Package `tennis_court`
 
