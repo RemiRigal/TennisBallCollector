@@ -59,8 +59,6 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 your_folder/
 │
 └───TennisBallCollector/
-│   │   
-│   │
 │   └───compute_trajectory/
 |   |   └───naolibs/
 |   |   └───naoqi-sdk-2.1.4.13-linux64/
@@ -74,7 +72,7 @@ your_folder/
 |   |   └───scenes/
 |   |
 |   └───interfaces/
-|   |   └───naorealimgs/
+|   |   └───mgs/  Messages personalisés
 |   |   └───naosimimgs/
 |   |
 |   └───reports/
