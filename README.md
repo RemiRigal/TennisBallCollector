@@ -1,3 +1,4 @@
+<img src="https://forthebadge.com/images/badges/made-with-python.svg" />
 # Tennis Ball Collector
 
 Ceci est un template de dépôt Git pour le cours d'ingénierie système et modélisation robotique à l'ENSTA Bretagne en 2021.
@@ -54,8 +55,55 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 
 ## Structure du dépôt
 
-Ce dépôt doit être cloné dans le dossier `src` d'un workspace ROS 2.
-
+```
+your_folder/
+│
+└───TennisBallCollector/
+│   └───compute_trajectory/
+|   |   └───naolibs/
+|   |   └───naoqi-sdk-2.1.4.13-linux64/
+|   |   └───pynaoqi-python2.7-2.1.4.13-linux64/
+|   |   └───V-REP_PRO_EDU_V3_6_2_Ubuntu18_04/
+│   |    │   vrep.sh
+│   |    │   ...
+|   |
+|   └───docs/
+|   |   └───py/
+|   |   └───scenes/
+|   |
+|   └───interfaces/
+|   |   └───mgs/  Messages personalisés
+|   |   └───naosimimgs/
+|   |
+|   └───reports/
+|   |   └───py/
+|   |   └───scenes/
+│   |
+└───ressources/
+|   |
+│   |
+└───roblochon_gazebo/
+|   |
+│   |
+└───robochon_description/
+|   |
+│   |
+└───sam_bot_description/
+|   |
+│   |
+└───tennis_ball_collector_launch/
+|   |
+│   |
+└───tennis_ball_detector/
+|   |
+│   |
+└───tennis_court/
+|   |
+│   |
+└───vadrouilleur_description/
+|   |
+│   |
+```
 ### Package `tennis_court`
 
 Le dossier `tennis_court` est un package ROS contenant le monde dans lequel le robot ramasseur de balle devra évoluer ainsi qu'un script permettant de faire apparaître des balles dans la simulation.
