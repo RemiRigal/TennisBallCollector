@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 from detection import *
+import time
 
 import time
 
@@ -125,5 +126,5 @@ if __name__ == "__main__":
         if cv2.waitKey(1) & 0xFF is ord('q'):
             cv2.destroyAllWindows()
         break
-
+        
     plt.show()
