@@ -1,7 +1,9 @@
 import random
 import matplotlib.pyplot as plt
 from detection import *
+
 import time
+
 
 
 def longueur (x,y, ordre):
@@ -39,7 +41,9 @@ def n_permutation(x,y, miniter):
     bordre = ordre.copy()
     d0 = longueur(x,y,ordre)
     for i in range(0,20):
+
         #print("iteration",i, "d=",d0)
+
         random.shuffle(ordre)
         ordre = permutation_rnd (x,y,ordre, 20)
         d = longueur(x,y,ordre)
@@ -62,6 +66,7 @@ if __name__ == "__main__":
     #y = [ random.random() for _ in range(n) ]
     
     #plt.plot(x,y,"o")
+
 
     i = 0
     #x = [-1, 1]
@@ -112,6 +117,7 @@ if __name__ == "__main__":
     
 
 
+
     while True:
         show_img("Balls", ball_img)
         show_img("Zones", zone_img)
@@ -119,5 +125,5 @@ if __name__ == "__main__":
         if cv2.waitKey(1) & 0xFF is ord('q'):
             cv2.destroyAllWindows()
         break
-        
+
     plt.show()
