@@ -72,7 +72,7 @@ your_folder/
 |   |   └───scenes/
 |   |
 |   └───interfaces/
-|   |   └───mgs/  Messages personalisés
+|   |   └───mgs/  *Messages personalisés*
 |   |   └───naosimimgs/
 |   |
 |   └───reports/
