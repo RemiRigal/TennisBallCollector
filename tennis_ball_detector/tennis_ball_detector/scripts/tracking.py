@@ -1,4 +1,4 @@
-
+#usr/bin/python3
 """
 Numeroter les balles
 
@@ -17,7 +17,7 @@ test if in orange square
 
 import cv2
 
-from detection import detect_balls, detect_zones, draw_boxes_from_center_coord, show_img
+from .detection import detect_balls, detect_zones, draw_boxes_from_center_coord, show_img
 
 
 def ball_in_balls(ball_to_test, balls, proportion_size_box_validation):
