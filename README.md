@@ -34,6 +34,14 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 
 ### Membres
 
+| Nom |
+| --- |
+| Samuel |
+| Hugo Sab |
+| Maxime Legeay |
+| Estelle ARRICAU |
+| Hugo PIQUARD |
+=======
 | Nom                                            |
 |------------------------------------------------|
 | [Samuel Prouten](https://github.com/samprt)    |
