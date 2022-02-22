@@ -9,29 +9,27 @@ Pourcentage de tâches réalisées: 65 %
 
 ### Ce qui a fonctionné
 
-* Calcul du trajet le plus rapide passant par la liste de position des balles sur le terrain.
-* Passer par la zone orange de dépôt des balles quand le robot est proche.
-* Détecter les balles et créer la liste des possitions des balles avec leurs dimensions et leur instant d'apparition sur le terrain.
-* Modèle simple du robot avec 2 bras rabatteurs sous le châssis.
+* Amélioration du ramassage de balle en ajoutant plus de friction sur les pinces du robot
+* Tâche supplémentaire ajoutée pendant le sprint : Création d'un moyen de lancement du projet rapide et efficace
+* Mise en place d'un robot complémentaire capable de cartographier l'environnement
+* Début de la mise à niveau du robot collecteur de balles pour le rendre utilisable avec Nav2
 
 ### Ce qui n'a pas fonctionné
 
-* Détecter qu'une balle sur 2 frames successives est identique même si elle s'est déplacée un peu et actualiser sa position : parfois, il différencie une même balle qui a trop bougé d'une frame à l'autre.
-* Ramasser les balles avec le robot : elles rebondissent sur les bras rabatteurs...
+* Utiliser un robot déjà proposé par Nav2 pour le SLAM (pas adapté au terrain)
+* Le ramassage des balles trop proches du mur
 
 
 ### Retour d'expérience du PO
 
-Groupe très agréable à encadrer et très volontaire, expérience intéressante en tant que PO qui permet d'avoir une vision globale du projet. Rapports à remplir un peu pénible. Difficile de prendre en main les outils comme Taïga dès le début mais une fois pris en main ils permettent une organisation bien plus efficace.
-Prendre une bonne habitude de pull requests / forks / merges sur github semble être un atout majeur pour la lisibilité du projet. 
+Groupe dynamique et très réactif, le rôle de PO a été grandement facilité par l'efficacité du travail et l'effort de communication de chacun. La résolution de problèmes lié à la structure de Github à gérer est un peu chronophage. Taïga est assez clair d'utilisation est permet de garder le flow de travail dynamique.
 
 ### Conseils pour le prochain PO
 
-L'équipe est très volontaire et il faut s'en servir comme une force, laisser les gens s'exprimer et prendre en compte les remarques de chacun qui sont souvent pertinentes. Il vaut mieux discuter en début de séance en lançant le sujet, puis écouter ce que chacun pense devoir faire pour créer une tache adaptée plutot que d'imposer des taches a chacun selon la vision du PO.
-Cependant, une fois que les taches sont attribuées, il faut veiller à ce que chacun accomplisse sa mission et ne se détourne pas vers la mission de quelqu'un d'autre, afin que les taches avancent vite et à peu près au même rythme.
+Le groupe de travail peu prendre des initiatives et sait rester autonome sur les user stories qui sont attribuées. Il faut néanmoins veiller à ce que les informations ne circulent pas trop vite pour que tout le monde reste au courant des avancée sur le projet global. En effet, si les implémentations divergent l'une de l'autre le projet se retrouve divisé et il est nécessaire de faire marche arrière. Cela n'est pas arrivé pendant le sprint car nous en avons discuté à mi-séance.
 
 
 ## Nouvelles mesures
 
-* Idée pour le contrôleur : champ de potentiel pour suivre les lignes générées par l'algo du voyageur de commerce.
-* Gestion des personnes à distance avec un appel collectif en début de séance comme mis en place aujourd'hui.
+* Idée pour le contrôleur : créer un contrôleur de secours avec une commande simple si Nav2 n'est pas implémenté assez vite 
+* Commencer la préparation de la soutenance
