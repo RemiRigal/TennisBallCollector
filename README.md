@@ -36,12 +36,12 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 
 | Nom                                            |
 |------------------------------------------------|
-| [Samuel Prouten](https://github.com/samprt)    |
-| [Hugo Sab](https://github.com/Hugosabb)        |
-| [Maxime Legeay](https://github.com/MaxLgy)     |
+| [Samuel PROUTEN](https://github.com/samprt)    |
+| [Hugo SABATIER](https://github.com/Hugosabb)        |
+| [Maxime LEGEAY](https://github.com/MaxLgy)     |
 | [Estelle ARRICAU](https://github.com/estellearrc)|
 | [Hugo PIQUARD](https://github.com/hugoPiq)     |
-| [Antonin Betaille](https://github.com/Anton1B) |
+| [Antonin BETAILLE](https://github.com/Anton1B) |
 
 
 
