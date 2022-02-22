@@ -22,9 +22,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(interfaces REQUIRED)
 
 add_executable(traj_compute src/travelling.cpp)
-ament_target_dependencies(traj_compute rclcpp std_msgs geometry_msgs)
+ament_target_dependencies(traj_compute rclcpp std_msgs geometry_msgs interfaces)
 
 install(TARGETS
     traj_compute
