@@ -83,7 +83,7 @@ your_folder/
 │   
 └───pynaoqi-python-2.7-naoqi-1.14-linux64/
     │   ...
-
+```
 ### Package `tennis_court`
 
 Le dossier `tennis_court` est un package ROS contenant le monde dans lequel le robot ramasseur de balle devra évoluer ainsi qu'un script permettant de faire apparaître des balles dans la simulation.
