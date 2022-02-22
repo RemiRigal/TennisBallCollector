@@ -7,14 +7,14 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Dépendences
 
-###### À compléter avec la/les dépendences.
+
 ```bash
 sudo apt install ros-<ROS-DISTRO>-gazebo-* ros-<ROS-DISTRO>-joint-state-publisher ros-<ROS-DISTRO>-joint-state-publisher-gui 
 ```
 
 ### Démarrer la simulation
 
-###### À compléter avec la/les commande(s) à lancer.
+
 ```bash
 cd ros2_workspace
 colcon build --symlink-install
