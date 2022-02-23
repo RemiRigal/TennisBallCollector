@@ -48,6 +48,7 @@ def ball_in_the_box(ball, box, psbv):
 def track_balls(t, image, last_balls, valid_balls):
 
 	ball_img, new_balls = detect_balls(image)
+
 	#show_img("mask", ball_img)
 	#print(new_balls)
 
@@ -106,14 +107,17 @@ if __name__ == "__main__":
 
 		frame = cv2.imread(folder_path+num_to_str(filename)+".png")
 
-		#print("Open image :", filename, " at time ", i*dt)
+		# print("Open image :", filename, " at time ", i*dt)
+
 
 		x_min, x_max, y_min, y_max = 287, 903, 572, 1660
 
 		frame = frame[x_min:x_max,y_min:y_max]
 
 		valid_detected_balls, last_detected_balls = track_balls(i*dt, frame, last_detected_balls, valid_detected_balls)
-		#print(valid_detected_balls)
+
+		# print(valid_detected_balls)
+
 
 		i += 1
 

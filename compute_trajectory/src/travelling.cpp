@@ -83,9 +83,11 @@ class TravellingTraj : public rclcpp::Node
     }
 
   private:
-    void robot_pos_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg) const
+    void robot_pos_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
     {
-      float pos[2]={msg->pose.position.x, msg->pose.position.y};
+      robot_posx = msg->pose.position.x;
+      robot_posy = msg->pose.position.y;
+      std::cout << "\nROBOT POS UPDATED \nx=" << robot_posx << "\ty=" << robot_posy << "\n";
     }
     
     void topic_callback(const interfaces::msg::BallList::SharedPtr msg) const
@@ -98,6 +100,8 @@ class TravellingTraj : public rclcpp::Node
         x.push_back(ball.x_center);
         y.push_back(ball.y_center);
       }
+      x.push_back(robot_posx);
+      y.push_back(robot_posy);
       int n_balls = x.size();
       int n = n_balls+4;
       
@@ -206,13 +210,20 @@ class TravellingTraj : public rclcpp::Node
       //std::cout<<"\n\nThe Path is:\n";
 
 
-      mincost(n, array, completed, &ordre, &cost, 0); //passing 0 because starting vertex
+      mincost(n, array, completed, &ordre, &cost, n-1); //passing 0 because starting vertex
      
       //std::cout<<"\n\nMinimum cost is "<<cost<<"\n";
       
-      //for (auto i:ordre)
-      //  std::cout << i << "-";
-      //std::cout << "\n";
+      std::cout << "Zones 0-1: x=" << 0 << "  y=" << 1 << std::endl;
+      std::cout << "Zones 2-3: x=" << 0 << "  y=" << -1 << std::endl;
+      for (int i = 0; i<n_balls-1; i++)
+      {
+        std::cout << "Ball " << i+4 << ": x=" << x[i] << "  y=" << y[i] << std::endl;
+      }
+      std::cout << "Robot: x=" << x[n_balls-1] << "  y=" << y[n_balls-1] << std::endl;
+      for (auto i:ordre)
+        std::cout << i << "-";
+      std::cout << "\n";
       
       auto message = geometry_msgs::msg::PoseStamped();
       auto target = geometry_msgs::msg::Pose();
@@ -240,7 +251,8 @@ class TravellingTraj : public rclcpp::Node
     rclcpp::Subscription<interfaces::msg::BallList>::SharedPtr subscription_;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr publisher_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr robot_sub_;
-    float robot_pos[2];
+    float robot_posx = 0.5;
+    float robot_posy = -0.12;
 };
 
 int main(int argc, char * argv[])
