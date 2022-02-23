@@ -62,6 +62,7 @@ class Detector(Node):
         super().__init__('robot_balls_publisher')
         self.balls_publisher_ = self.create_publisher(BallList, '/ball_list', 10)
         self.robot_pose_publisher_ = self.create_publisher(PoseStamped, '/robot_pose', 10)
+
         self.cam_subscriber = self.create_subscription(
             Image,                                              
             '/zenith_camera/image_raw',
@@ -91,9 +92,13 @@ class Detector(Node):
         # =============================== Balls detection =======================================
 
         self.valid_detected_balls, self.last_detected_balls = track_balls(t, frame, self.last_detected_balls, self.valid_detected_balls)
-        draw_boxes_from_center_coord(frame, self.last_detected_balls, (0,0,255), 1)
-        draw_boxes_from_center_coord(frame, self.valid_detected_balls, (0,255,0), 1)
-        # show_img("frame2", frame)
+        
+        #print(self.valid_detected_balls)
+        #draw_boxes_from_center_coord(frame, self.last_detected_balls, (0,0,255), 1)
+        #draw_boxes_from_center_coord(frame, self.valid_detected_balls, (0,255,0), 1)
+        # show_img("frame", frame)
+        # cv2.waitKey()
+
         ball_list = []
         for b in self.valid_detected_balls:
             msg = Ball()
