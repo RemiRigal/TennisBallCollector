@@ -48,11 +48,12 @@ class Navigator(Node):
         self.spiral_center = np.zeros((2, 1))
 
         self.command = Twist()
+        self.command_pub = self.create_publisher(Twist, "cmd_vel", 10)
 
         self.create_subscription(PoseStamped, "goal_pose", self.target_goal_callback, 10)
         self.create_subscription(PoseStamped, "robot_pose", self.robot_pose_callback, 10)
 
-        self.main_timer = self.create_timer(0.1, self.timer_callback)
+        self.main_timer = self.create_timer(0.05, self.timer_callback)
 
     def target_goal_callback(self, msg):
         self.last_position = self.target_position
@@ -95,10 +96,11 @@ class Navigator(Node):
         except np.linalg.LinAlgError:
             pass
 
-        self.get_logger().debug(f"Command = {u}")
+        self.get_logger().info(f"Command = {u}")
 
         self.command.angular.z = u[0, 0]
         self.command.linear.x += self.main_timer.time_since_last_call() * u[1, 0]
+        self.command_pub.publish(self.command)
 
 
 def main():
