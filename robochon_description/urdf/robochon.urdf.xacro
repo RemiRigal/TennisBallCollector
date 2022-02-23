@@ -74,7 +74,7 @@
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}" />
   </link>
   <gazebo reference="base_link">
-    <material>Gazebo/Black</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
 
   <!-- Robot Footprint -->
@@ -124,13 +124,12 @@
           </contact>
         </surface>
       </collision>
-      <gazebo reference="${prefix}_link">
-        <material>Gazebo/Grey</material>
-      </gazebo>
       <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}" />
 
     </link>
-
+    <gazebo reference="${prefix}_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
     <joint name="${prefix}_joint" type="continuous">
       <parent link="base_link" />
       <child link="${prefix}_link" />
@@ -142,7 +141,7 @@
   <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" />
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" />
 
-
+  <!-- Front caster -->
   <xacro:macro name="front_caster" params="prefix y_reflect link_daddy">
     <link name="front_caster_${prefix}">
       <visual>
