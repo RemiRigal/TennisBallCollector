@@ -84,8 +84,8 @@ class Detector(Node):
         img_height = msg.height
         frame = np.array(msg.data).reshape((img_height,img_width,3)) #RGB images
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-        # show_img("frame", frame)
-        # cv2.waitKey(10)
+        #show_img("frame", frame)
+        #cv2.waitKey(10)
         # cv2.imwrite("images/image_" + str(t) + ".png", frame)
 
 
@@ -96,8 +96,8 @@ class Detector(Node):
         #print(self.valid_detected_balls)
         #draw_boxes_from_center_coord(frame, self.last_detected_balls, (0,0,255), 1)
         #draw_boxes_from_center_coord(frame, self.valid_detected_balls, (0,255,0), 1)
-        # show_img("frame", frame)
-        # cv2.waitKey()
+        #show_img("frame", frame)
+        #cv2.waitKey(10)
 
         ball_list = []
         for b in self.valid_detected_balls:
@@ -117,7 +117,8 @@ class Detector(Node):
         _, robot = detect_robot(frame)
         # print(robot)
         if robot != None:
-            x, y, theta = robot[1]*self.ground_dx, -robot[0]*self.ground_dy, robot[2]
+            # x, y, theta = robot[1]*self.ground_dx, -robot[0]*self.ground_dy, robot[2]
+            x, y, theta = robot[1], -robot[0], robot[2]
             print(x, y, theta)
             pose_msg = PoseStamped()
             pose_msg.header.frame_id = "map"

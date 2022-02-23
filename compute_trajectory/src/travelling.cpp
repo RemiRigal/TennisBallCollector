@@ -85,9 +85,8 @@ class TravellingTraj : public rclcpp::Node
   private:
     void robot_pos_callback(const geometry_msgs::msg::PoseStamped::SharedPtr msg)
     {
-      robot_posx = msg->pose.position.x;
-      robot_posy = msg->pose.position.y;
-      std::cout << "\nROBOT POS UPDATED \nx=" << robot_posx << "\ty=" << robot_posy << "\n";
+      robot_posx = msg->pose.position.y;
+      robot_posy = - msg->pose.position.x;
     }
     
     void topic_callback(const interfaces::msg::BallList::SharedPtr msg) const
@@ -241,8 +240,8 @@ class TravellingTraj : public rclcpp::Node
       }
       else
       {
-        target.position.x = x[ntarget-4];
-        target.position.y = y[ntarget-4];
+        target.position.x = 8*y[ntarget-4];
+        target.position.y = -15*x[ntarget-4];
       }
       message.pose = target;
       publisher_->publish(message);
