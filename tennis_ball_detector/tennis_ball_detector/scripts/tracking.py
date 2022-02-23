@@ -1,4 +1,4 @@
-
+#usr/bin/python3
 """
 Numeroter les balles
 
@@ -17,7 +17,7 @@ test if in orange square
 
 import cv2
 
-from detection import detect_balls, detect_zones, draw_boxes_from_center_coord, show_img
+from .detection import detect_balls, detect_zones, draw_boxes_from_center_coord, show_img
 
 
 def ball_in_balls(ball_to_test, balls, proportion_size_box_validation):
@@ -48,8 +48,8 @@ def ball_in_the_box(ball, box, psbv):
 def track_balls(t, image, last_balls, valid_balls):
 
 	ball_img, new_balls = detect_balls(image)
-	show_img("mask", ball_img)
-	print(new_balls)
+	#show_img("mask", ball_img)
+	#print(new_balls)
 
 	zone_img, zones = detect_zones(image)
 
@@ -106,14 +106,14 @@ if __name__ == "__main__":
 
 		frame = cv2.imread(folder_path+num_to_str(filename)+".png")
 
-		print("Open image :", filename, " at time ", i*dt)
+		#print("Open image :", filename, " at time ", i*dt)
 
 		x_min, x_max, y_min, y_max = 287, 903, 572, 1660
 
 		frame = frame[x_min:x_max,y_min:y_max]
 
 		valid_detected_balls, last_detected_balls = track_balls(i*dt, frame, last_detected_balls, valid_detected_balls)
-		print(valid_detected_balls)
+		#print(valid_detected_balls)
 
 		i += 1
 
@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
 		draw_boxes_from_center_coord(frame, valid_detected_balls, (0,255,0), 1)
 
-		show_img("frame", frame)
+		#show_img("frame", frame)
 
 		while True:
 			key = cv2.waitKey(1) & 0xFF 

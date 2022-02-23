@@ -1,6 +1,10 @@
 import random
 import matplotlib.pyplot as plt
 from detection import *
+import time
+
+import time
+
 
 
 def longueur (x,y, ordre):
@@ -38,7 +42,9 @@ def n_permutation(x,y, miniter):
     bordre = ordre.copy()
     d0 = longueur(x,y,ordre)
     for i in range(0,20):
-        print("iteration",i, "d=",d0)
+
+        #print("iteration",i, "d=",d0)
+
         random.shuffle(ordre)
         ordre = permutation_rnd (x,y,ordre, 20)
         d = longueur(x,y,ordre)
@@ -61,27 +67,56 @@ if __name__ == "__main__":
     #y = [ random.random() for _ in range(n) ]
     
     #plt.plot(x,y,"o")
-    
-    x = [-1]
-    y = [1]
-    n = len(x)
+
+
+    i = 0
+    #x = [-1, 1]
+    #y = [1, -1]
+    x_l = [0, 0, -1]
+    y_l = [1, -1, 1]
+    x_r = [0, 0, 1]
+    y_r = [1, -1, -1]
     for l in balls:
-        x.append(l[0])
-        y.append(l[1])
-    print(x, y)
+        if l[0] < 0:
+            x_l.append(l[0])
+            y_l.append(l[1])
+        else:
+            x_r.append(l[0])
+            y_r.append(l[1])
+    for _ in range(5):
+        
+        for t in ["l", "r"]:
+            if t == "l":
+                x = x_l
+                y = y_l
+            else:
+                x = x_r
+                y = y_r
+            n = len(x)
+            ordre = list(range(len(x)))
 
-    ordre = list(range(len(x)))
-    print("longueur initiale", longueur(x,y,ordre))
+            ordre = n_permutation (x,y, 20)
+            xo = [ x[o] for o in ordre + [ordre[0]]]
+            yo = [ y[o] for o in ordre + [ordre[0]]]
+            
+            ind = (ordre.index(0)+1)%(n+1)
+            pos_x, pos_y  = xo[ind], yo[ind]
+            #print(pos_x, pos_y)
+            
+            #plt.figure(i)
+            plt.plot(xo,yo, "bo-")
+            #plt.plot(pos_x, pos_y, "ro")
+            
+            x = [xo[k] for k in range(len(xo)) if k!=ind]
+            y = [yo[k] for k in range(len(xo)) if k!=ind]
+            i+=1
+            
+        plt.pause(1)
+        plt.clf()
 
-    ordre = n_permutation (x,y, 20)
-    print("ordre = ", ordre)
-    print("longueur min", longueur(x,y,ordre))
-    xo = [ x[o] for o in ordre + [ordre[0]]]
-    yo = [ y[o] for o in ordre + [ordre[0]]]
-    plt.plot(xo,yo, "o-")
+    
+    
 
-    #plt.text(xo[0],yo[0],"0",color="r",weight="bold",size="x-large")
-    #plt.text(xo[-2],yo[-2],"N-1",color="r",weight="bold",size="x-large")
 
 
     while True:
@@ -91,5 +126,5 @@ if __name__ == "__main__":
         if cv2.waitKey(1) & 0xFF is ord('q'):
             cv2.destroyAllWindows()
         break
-
+        
     plt.show()

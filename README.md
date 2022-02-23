@@ -1,5 +1,5 @@
-# Tennis Ball Collector
-
+### Tennis Ball Collector
+<img src="https://forthebadge.com/images/badges/made-with-python.svg" />
 Ceci est un template de dépôt Git pour le cours d'ingénierie système et modélisation robotique à l'ENSTA Bretagne en 2021.
 
 
@@ -7,14 +7,14 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 ### Dépendences
 
-###### À compléter avec la/les dépendences.
+
 ```bash
 sudo apt install ros-<ROS-DISTRO>-gazebo-* ros-<ROS-DISTRO>-joint-state-publisher ros-<ROS-DISTRO>-joint-state-publisher-gui 
 ```
 
 ### Démarrer la simulation
 
-###### À compléter avec la/les commande(s) à lancer.
+
 ```bash
 cd ros2_workspace
 colcon build --symlink-install
@@ -36,12 +36,12 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 
 | Nom                                            |
 |------------------------------------------------|
-| [Samuel Prouten](https://github.com/samprt)    |
-| Hugo Sab                                       |
-| Maxime Legeay                                  |
-| Estelle ARRICAU                                |
-| Hugo PIQUARD                                   |
-| [Antonin Betaille](https://github.com/Anton1B) |
+| [Samuel PROUTEN](https://github.com/samprt)    |
+| [Hugo SABATIER](https://github.com/Hugosabb)        |
+| [Maxime LEGEAY](https://github.com/MaxLgy)     |
+| [Estelle ARRICAU](https://github.com/estellearrc)|
+| [Hugo PIQUARD](https://github.com/hugoPiq)     |
+| [Antonin BETAILLE](https://github.com/Anton1B) |
 
 
 
@@ -54,8 +54,39 @@ ros2 launch tennis_ball_collector_launch mission_1.launch.py
 
 ## Structure du dépôt
 
-Ce dépôt doit être cloné dans le dossier `src` d'un workspace ROS 2.
+```
+your_folder/
+│
+└───TennisBallCollector/
+│   └───compute_trajectory/
+|   |
+|   └───docs/
+|   |
+|   └───interfaces/
+|   |   └───mgs/  *Messages personalisés*
+|   |
+|   └───reports/  *Rapports PO*
+│   |
+└───ressources/
+│   |
+└───roblochon_gazebo/
+│   |
+└───robochon_description/  *Description du robot*
+|   |   └───urdf/  *Scripts urdf du robot*
+│   |
+└───sam_bot_description/
+│   |
+└───tennis_ball_collector_launch/  *Package launch*
+|   |   └───launch/  *Script launch*
+|   |
+└───tennis_ball_detector/ *Packages et fichier liès à la détection des balles*
+|   |   └───ressource/  *Scritps*
+|   |   └───tennis_ball_dectector/ *Package*
+│   |
+└───tennis_court/  *Monde de la simulation*
+│   |
 
+```
 ### Package `tennis_court`
 
 Le dossier `tennis_court` est un package ROS contenant le monde dans lequel le robot ramasseur de balle devra évoluer ainsi qu'un script permettant de faire apparaître des balles dans la simulation.
