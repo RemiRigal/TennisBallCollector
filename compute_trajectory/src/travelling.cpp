@@ -10,6 +10,7 @@
 //#include "geometry_msgs/msg/Pose.hpp"
 //#include "std_msgs/msg/Header.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "geometry_msgs/msg/pose_array.hpp"
 #include "interfaces/msg/ball_list.hpp"
 #include "interfaces/msg/ball.hpp"
 using std::placeholders::_1;
@@ -77,7 +78,7 @@ class TravellingTraj : public rclcpp::Node
     {
       subscription_ = this->create_subscription<interfaces::msg::BallList>(
         "ball_list", 10, std::bind(&TravellingTraj::topic_callback, this, _1));
-      publisher_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("target", 10);
+      publisher_ = this->create_publisher<geometry_msgs::msg::PoseArray>("target", 10);
       robot_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
         "robot_pose", 10, std::bind(&TravellingTraj::robot_pos_callback, this, _1));
     }
@@ -213,7 +214,7 @@ class TravellingTraj : public rclcpp::Node
      
       //std::cout<<"\n\nMinimum cost is "<<cost<<"\n";
       
-      std::cout << "Zones 0-1: x=" << 0 << "  y=" << 1 << std::endl;
+      /*std::cout << "Zones 0-1: x=" << 0 << "  y=" << 1 << std::endl;
       std::cout << "Zones 2-3: x=" << 0 << "  y=" << -1 << std::endl;
       for (int i = 0; i<n_balls-1; i++)
       {
@@ -222,33 +223,57 @@ class TravellingTraj : public rclcpp::Node
       std::cout << "Robot: x=" << x[n_balls-1] << "  y=" << y[n_balls-1] << std::endl;
       for (auto i:ordre)
         std::cout << i << "-";
-      std::cout << "\n";
+      std::cout << "\n";*/
       
-      auto message = geometry_msgs::msg::PoseStamped();
-      auto target = geometry_msgs::msg::Pose();
+      geometry_msgs::msg::PoseArray message;
+      std::vector<geometry_msgs::msg::Pose> poses;
       
-      int ntarget = ordre[1];
-      if (ntarget == 0 or ntarget == 1)
+      for (int i=0; i<n; i++)
       {
-        target.position.x = 0;
-        target.position.y = 1;
+        geometry_msgs::msg::Pose target;
+        if (ordre[i] == 0)
+        {
+          target.position.x = 6.68;
+          target.position.y = 1.63;
+        }
+        else if (ordre[i] == 1)
+        {
+          target.position.x = 6.68;
+          target.position.y = -1.63;
+        }
+        else if (ordre[i] == 2)
+        {
+          target.position.x = -6.68;
+          target.position.y = 1.63;
+        }
+        else if (ordre[i] == 3)
+        {
+          target.position.x = -6.68;
+          target.position.y = -1.63;
+        }
+        else if (ordre[i] == 4)
+        {
+          target.position.x = 6.4;
+          target.position.y = 13.3;
+        }
+        else if (ordre[i] == 5)
+        {
+          target.position.x = -6.4;
+          target.position.y = -13.3;
+        }
+        else
+        {
+          target.position.x = 8*y[ordre[i]-4];
+          target.position.y = -15*x[ordre[i]-4];
+        }
+        poses.push_back(target);
       }
-      else if (ntarget == 2 or ntarget == 3)
-      {
-        target.position.x = 0;
-        target.position.y = -1;
-      }
-      else
-      {
-        target.position.x = 8*y[ntarget-4];
-        target.position.y = -15*x[ntarget-4];
-      }
-      message.pose = target;
+      message.poses = poses;
       publisher_->publish(message);
       
     }
     rclcpp::Subscription<interfaces::msg::BallList>::SharedPtr subscription_;
-    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr publisher_;
+    rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr publisher_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr robot_sub_;
     float robot_posx = 0.5;
     float robot_posy = -0.12;
