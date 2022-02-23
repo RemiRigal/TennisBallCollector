@@ -12,7 +12,7 @@ class BallsDetector(Node):
 
     def __init__(self):
         super().__init__('balls_publisher')
-        self.balls_publisher_ = self.create_publisher(BallList, '/ball_list', 1)     # CHANGE
+        self.balls_publisher_ = self.create_publisher(BallList, '/ball_list', 10)
         self.cam_subscriber = self.create_subscription(
             Image,                                              
             '/zenith_camera/image_raw',
@@ -24,7 +24,7 @@ class BallsDetector(Node):
     
     def image_callback(self, msg):
         t = msg.header.stamp.sec + 10e-9 * msg.header.stamp.nanosec
-        self.get_logger().info('I heard: "%s"' % str(t)) 
+        #self.get_logger().info('I heard: "%s"' % str(t)) 
         img_width = msg.width
         img_height = msg.height
         img_step = msg.step # Full row length in bytes
@@ -33,9 +33,9 @@ class BallsDetector(Node):
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         # cv2.imwrite("images/image_" + str(t) + ".png", frame)
         self.valid_detected_balls, self.last_detected_balls = track_balls(t, frame, self.last_detected_balls, self.valid_detected_balls)
-        print(self.valid_detected_balls)
-        draw_boxes_from_center_coord(frame, self.last_detected_balls, (0,0,255), 1)
-        draw_boxes_from_center_coord(frame, self.valid_detected_balls, (0,255,0), 1)
+        #print(self.valid_detected_balls)
+        #draw_boxes_from_center_coord(frame, self.last_detected_balls, (0,0,255), 1)
+        #draw_boxes_from_center_coord(frame, self.valid_detected_balls, (0,255,0), 1)
         # show_img("frame", frame)
         # cv2.waitKey()
         ball_list = []
