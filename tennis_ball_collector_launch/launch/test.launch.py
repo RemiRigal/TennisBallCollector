@@ -15,21 +15,43 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     urdf_file_name = 'urdf/robochon.urdf.xacro'
     urdf_file = os.path.join(get_package_share_directory('robochon_description'), urdf_file_name)
-    nav2_params = os.path.join(get_package_share_directory('robochon_description'), 'config', 'nav2_params.yaml')
-    lifecycle_nodes = ['controller_server',
-                       'smoother_server',
-                       'planner_server',
-                       'recoveries_server',
-                       'bt_navigator',
-                       'waypoint_follower',
-                       'map_server',
-                       'amcl']
-    remappings = [('/tf', 'tf'),
-                  ('/tf_static', 'tf_static')]
+    tennis_court_share = get_package_share_directory("tennis_court")
+    gazebo_ros_share = get_package_share_directory("gazebo_ros")
 
-    sim_time_arg = DeclareLaunchArgument('use_sim_time',
-                                         default_value='false',
-                                         description='Use simulation (Gazebo) clock if true')
+    # Gazebo Server
+    gzserver_launch_file = os.path.join(gazebo_ros_share, "launch", "gzserver.launch.py")
+    world_file = os.path.join(tennis_court_share, "worlds", "court.world")
+    gzserver_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(gzserver_launch_file),
+        launch_arguments={
+            "world": world_file,
+            "verbose": "false",
+            "pause": LaunchConfiguration("paused")
+        }.items()
+    )
+
+    # Gazebo Client
+    gzclient_launch_file = os.path.join(gazebo_ros_share, "launch", "gzclient.launch.py")
+    gzclient_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(gzclient_launch_file),
+        condition=IfCondition(LaunchConfiguration("gui"))
+    )
+
+    static_tf_node = Node(
+        package="tf2_ros",
+        arguments=["0", "0", "8", "3.14159", "1.57079", "3.14159", "map", "zenith_camera_link"],
+        executable="static_transform_publisher"
+    )
+
+    # Ball Manager
+    ball_manager_node = Node(
+        package="tennis_court",
+        condition=IfCondition(LaunchConfiguration("manager")),
+        parameters=[{"use_sim_time": True}],
+        output="screen",
+        emulate_tty=True,
+        executable="ball_manager.py"
+    )
 
     robot_state_publisher_node = Node(package='robot_state_publisher',
                                       executable='robot_state_publisher',
@@ -39,97 +61,31 @@ def generate_launch_description():
                                                   {'use_sim_time': use_sim_time}],
                                       arguments=[urdf_file])
 
-    robot_localization_node = Node(
-        package='robot_localization',
-        executable='ekf_node',
-        name='ekf_filter_node',
-        output='screen',
-        parameters=[os.path.join(get_package_share_directory('robochon_description'), 'config/ekf.yaml'),
-                    {'use_sim_time': use_sim_time}]
-    )
-
-    controller_node = Node(
-        package='nav2_controller',
-        executable='controller_server',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    smoother_node = Node(
-        package='nav2_smoother',
-        executable='smoother_server',
-        name='smoother_server',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    planner_node = Node(
-        package='nav2_planner',
-        executable='planner_server',
-        name='planner_server',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    recoveries_node = Node(
-        package='nav2_recoveries',
-        executable='recoveries_server',
-        name='recoveries_server',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    bt_nav_node = Node(
-        package='nav2_bt_navigator',
-        executable='bt_navigator',
-        name='bt_navigator',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    waypoint_node = Node(
-        package='nav2_waypoint_follower',
-        executable='waypoint_follower',
-        name='waypoint_follower',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    map_node = Node(
-        package='nav2_map_server',
-        executable='map_server',
-        name='map_server',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    amcl_node = Node(
-        package='nav2_amcl',
-        executable='amcl',
-        name='amcl',
-        output='screen',
-        parameters=[nav2_params],
-        remappings=remappings)
-    lf_manager_node = Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager_navigation',
-        output='screen',
-        parameters=[{'use_sim_time': use_sim_time},
-                    {'autostart': True},
-                    {'node_names': lifecycle_nodes}])
-
     spawn_node = Node(package='gazebo_ros',
                       executable='spawn_entity.py',
                       name='urdf_spawner',
                       output='screen',
                       arguments=["-topic", "/robot_description", "-entity", "robochon", "-y", "3.0", "-z", "0.2"])
 
+    rqt_steering_node = Node(package='rqt_robot_steering',
+                             executable='rqt_robot_steering')
+
+    ball_detector_node = Node(package='tennis_ball_detector',
+                              executable='detection_node')
+
     return LaunchDescription([
-        sim_time_arg,
+        DeclareLaunchArgument(name="gui", default_value="true"),
+        DeclareLaunchArgument(name="paused", default_value="false"),
+        DeclareLaunchArgument(name="manager", default_value="true"),
+        DeclareLaunchArgument('use_sim_time',
+                              default_value='false',
+                              description='Use simulation (Gazebo) clock if true'),
+        gzserver_launch,
+        gzclient_launch,
+        static_tf_node,
+        ball_manager_node,
         robot_state_publisher_node,
         spawn_node,
-        # robot_localization_node,
-        controller_node,
-        # smoother_node,
-        planner_node,
-        recoveries_node,
-        bt_nav_node,
-        waypoint_node,
-        amcl_node,
-        map_node,
-        lf_manager_node,
+        rqt_steering_node,
+        ball_detector_node,
     ])
