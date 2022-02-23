@@ -9,7 +9,8 @@ Ceci est un template de dépôt Git pour le cours d'ingénierie système et mod�
 
 
 ```bash
-sudo apt install ros-<ROS-DISTRO>-gazebo-* ros-<ROS-DISTRO>-joint-state-publisher ros-<ROS-DISTRO>-joint-state-publisher-gui 
+sudo apt install ros-<ROS-DISTRO>-gazebo-* ros-<ROS-DISTRO>-joint-state-publisher ros-<ROS-DISTRO>-joint-state-publisher-gui \
+pip install imutils
 ```
 
 ### Démarrer la simulation
