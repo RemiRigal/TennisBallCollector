@@ -2,7 +2,7 @@
 
 <robot name="robochon" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Define robot constants -->
-  <xacro:property name="base_width" value="${3*0.31}" />
+  <xacro:property name="base_width" value="${3.2*0.31}" />
   <xacro:property name="base_length" value="${3*0.42}" />
   <xacro:property name="base_height" value="0.18" />
 
@@ -74,7 +74,7 @@
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}" />
   </link>
   <gazebo reference="base_link">
-    <material>Gazebo/Black</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
 
   <!-- Robot Footprint -->
@@ -124,13 +124,12 @@
           </contact>
         </surface>
       </collision>
-      <gazebo reference="${prefix}_link">
-        <material>Gazebo/Grey</material>
-      </gazebo>
       <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}" />
 
     </link>
-
+    <gazebo reference="${prefix}_link">
+      <material>Gazebo/Grey</material>
+    </gazebo>
     <joint name="${prefix}_joint" type="continuous">
       <parent link="base_link" />
       <child link="${prefix}_link" />
@@ -142,7 +141,7 @@
   <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" />
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" />
 
-
+  <!-- Front caster -->
   <xacro:macro name="front_caster" params="prefix y_reflect link_daddy">
     <link name="front_caster_${prefix}">
       <visual>
@@ -170,7 +169,7 @@
     <joint name="caster_joint_${prefix}" type="fixed">
       <parent link="${link_daddy}" />
       <child link="front_caster_${prefix}" />
-      <origin xyz="${caster_xoff} ${y_reflect*0.7*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
+      <origin xyz="${caster_xoff} ${y_reflect*0.55*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
     </joint>
   </xacro:macro>
 
@@ -221,8 +220,8 @@
   <xacro:gripper prefix="gripper_hor" x_reflect="-2" y_reflect="0" z_reflect="1" z_rotation="1.57" lenght_x="0.5" link_daddy="base_link" />
 
 
-  <xacro:gripper prefix="gripper_l_front" x_reflect="1.7" y_reflect="-0.45" z_reflect="0" z_rotation="0.5" lenght_x="0.5" link_daddy="gripper_l_link" />
-  <xacro:gripper prefix="gripper_r_front" x_reflect="1.7" y_reflect="0.45" z_reflect="0" z_rotation="-0.5" lenght_x="0.5" link_daddy="gripper_r_link" />
+  <xacro:gripper prefix="gripper_l_front" x_reflect="1.7" y_reflect="-0.45" z_reflect="0" z_rotation="0.6" lenght_x="0.5" link_daddy="gripper_l_link" />
+  <xacro:gripper prefix="gripper_r_front" x_reflect="1.7" y_reflect="0.45" z_reflect="0" z_rotation="-0.6" lenght_x="0.5" link_daddy="gripper_r_link" />
 
 
   <!-- LIDAR -->
