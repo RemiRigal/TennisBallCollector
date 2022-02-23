@@ -122,9 +122,9 @@ def detect_robot(image, lenght_max=10000, lenght_min =0, radius_max=1000, radius
 					lenght_between_circles = math.sqrt((circle_red[0]-circle_green[0])**2+(circle_red[1]-circle_green[1])**2)
 
 					if lenght_max >= lenght_between_circles >= lenght_min:
-						x, y, theta = compute_pos(circle_red[:2], circle_green[:2], image)
+						x, y, theta = compute_pos(circle_green[:2], circle_red[:2], image)
 						print("Lenght between circle = ", lenght_between_circles)
-						draw_pos(image, (x, y, theta), (255, 0, 0), 10, 50)
+						
 
 						x_center, y_center = frame_to_center(x, y, image.shape[1], image.shape[0])
 						robot_pos = (x_center, y_center, theta)
