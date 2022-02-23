@@ -87,6 +87,7 @@ class TravellingTraj : public rclcpp::Node
     {
       robot_posx = msg->pose.position.x;
       robot_posy = msg->pose.position.y;
+      std::cout << "\nROBOT POS UPDATED \nx=" << robot_posx << "\ty=" << robot_posy << "\n";
     }
     
     void topic_callback(const interfaces::msg::BallList::SharedPtr msg) const
