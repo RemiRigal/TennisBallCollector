@@ -61,19 +61,21 @@
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}" />
       </geometry>
+      <material name="Cyan">
+        <color rgba="0 1.0 1.0 1.0" />
+      </material>
     </visual>
     <collision>
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}" />
       </geometry>
     </collision>
+
     <xacro:box_inertia m="15" w="${base_width}" d="${base_length}" h="${base_height}" />
   </link>
-
   <gazebo reference="base_link">
-    <material>Gazebo/Grey</material>
+    <material>Gazebo/Black</material>
   </gazebo>
-
 
   <!-- Robot Footprint -->
   <link name="base_footprint" />
@@ -122,15 +124,13 @@
           </contact>
         </surface>
       </collision>
-
+      <gazebo reference="${prefix}_link">
+        <material>Gazebo/Grey</material>
+      </gazebo>
       <xacro:cylinder_inertia m="0.5" r="${wheel_radius}" h="${wheel_width}" />
 
     </link>
-    <gazebo reference="${prefix}_link">
-      <mu1>0.01</mu1>
-      <mu2>0.01</mu2>
-      <material>Gazebo/Grey</material>
-    </gazebo>
+
     <joint name="${prefix}_joint" type="continuous">
       <parent link="base_link" />
       <child link="${prefix}_link" />
@@ -142,7 +142,7 @@
   <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" />
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" />
 
-  <!-- Front caster -->
+
   <xacro:macro name="front_caster" params="prefix y_reflect link_daddy">
     <link name="front_caster_${prefix}">
       <visual>
@@ -170,13 +170,12 @@
     <joint name="caster_joint_${prefix}" type="fixed">
       <parent link="${link_daddy}" />
       <child link="front_caster_${prefix}" />
-      <origin xyz="${caster_xoff} ${y_reflect*0.6*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
+      <origin xyz="${caster_xoff} ${y_reflect*0.7*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
     </joint>
   </xacro:macro>
 
   <xacro:front_caster prefix="front_left" link_daddy="base_link" y_reflect="1" />
   <xacro:front_caster prefix="front_right" link_daddy="base_link" y_reflect="-1" />
-
   <gazebo reference="front_caster_front_left">
     <material>Gazebo/Red</material>
   </gazebo>
@@ -184,7 +183,6 @@
   <gazebo reference="front_caster_front_right">
     <material>Gazebo/Green</material>
   </gazebo>
-
 
   <!-- Gripper -->
   <xacro:macro name="gripper" params="prefix x_reflect y_reflect z_reflect z_rotation lenght_x link_daddy">
@@ -194,6 +192,9 @@
         <geometry>
           <box size="${gripper_length*lenght_x} ${gripper_width} ${gripper_height}" />
         </geometry>
+        <material name="Cyan">
+          <color rgba="0 1.0 1.0 1.0" />
+        </material>
       </visual>
       <collision>
         <geometry>
@@ -215,8 +216,8 @@
     </joint>
   </xacro:macro>
 
-  <xacro:gripper prefix="gripper_l" x_reflect="1" y_reflect="1" z_reflect="1" z_rotation="0.15" lenght_x="1" link_daddy="base_link" />
-  <xacro:gripper prefix="gripper_r" x_reflect="1" y_reflect="-1" z_reflect="1" z_rotation="-0.15" lenght_x="1" link_daddy="base_link" />
+  <xacro:gripper prefix="gripper_l" x_reflect="1" y_reflect="1" z_reflect="1" z_rotation="0.3" lenght_x="1" link_daddy="base_link" />
+  <xacro:gripper prefix="gripper_r" x_reflect="1" y_reflect="-1" z_reflect="1" z_rotation="-0.3" lenght_x="1" link_daddy="base_link" />
   <xacro:gripper prefix="gripper_hor" x_reflect="-2" y_reflect="0" z_reflect="1" z_rotation="1.57" lenght_x="0.5" link_daddy="base_link" />
 
 
@@ -277,6 +278,7 @@
       <geometry>
         <box size="${camera} ${camera} ${camera}" />
       </geometry>
+      <material name="red" />
     </visual>
 
     <inertial>
