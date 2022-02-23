@@ -169,7 +169,7 @@
     <joint name="caster_joint_${prefix}" type="fixed">
       <parent link="${link_daddy}" />
       <child link="front_caster_${prefix}" />
-      <origin xyz="${caster_xoff} ${y_reflect*0.7*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
+      <origin xyz="${caster_xoff} ${y_reflect*0.6*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
     </joint>
   </xacro:macro>
 
