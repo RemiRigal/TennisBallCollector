@@ -8,6 +8,8 @@
 //#include "geometry_msgs/msg/Pose.hpp"
 //#include "std_msgs/msg/Header.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
+#include "interfaces/msg/ball_list.hpp"
+#include "interfaces/msg/ball.hpp"
 using std::placeholders::_1;
 
 float longueur(std::vector<float> x, std::vector<float> y, std::vector<int> ordre)
@@ -90,25 +92,46 @@ class TravellingTraj : public rclcpp::Node
     TravellingTraj()
     : Node("trajectory_planning")
     {
-      subscription_ = this->create_subscription<std_msgs::msg::String>(
-      "list_ball", 10, std::bind(&TravellingTraj::topic_callback, this, _1));
+      subscription_ = this->create_subscription<interfaces::msg::BallList>(
+      "ball_list", 10, std::bind(&TravellingTraj::topic_callback, this, _1));
+      publisher_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("target", 10);
     }
 
   private:
-    void topic_callback(const std_msgs::msg::String::SharedPtr msg) const
+    void topic_callback(const interfaces::msg::BallList::SharedPtr msg) const
     {
-      RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
       std::vector<float> x_l{0, 0, -1};
       std::vector<float> y_l{1, -1, 1};
       std::vector<float> x_r{0, 0, 1};
       std::vector<float> y_r{1, -1, -1};
       
-      //std::vector<std::vector<
+      for (auto ball: msg->ball_list)
+      {
+        std::cout << ball.x_center;
+        if (ball.x_center < 0)
+        {
+          x_l.push_back(ball.x_center);
+          y_l.push_back(ball.y_center);
+        }
+        else
+        {
+          x_r.push_back(ball.x_center);
+          y_r.push_back(ball.y_center);
+        }
+      }
       
+      
+      
+      auto message = geometry_msgs::msg::PoseStamped();
+      auto target = geometry_msgs::msg::Pose();
+      target.position.x = 5;
+      target.position.y = 5;
+      message.pose = target;
       
       
     }
-    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
+    rclcpp::Subscription<interfaces::msg::BallList>::SharedPtr subscription_;
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr publisher_;
 };
 
 int main(int argc, char * argv[])
