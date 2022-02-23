@@ -49,7 +49,8 @@ def track_balls(t, image, last_balls, valid_balls):
 
 	ball_img, new_balls = detect_balls(image)
 
-	#show_img("mask", ball_img)
+	# show_img("mask", ball_img)
+	# cv2.waitKey(10)
 	#print(new_balls)
 
 	zone_img, zones = detect_zones(image)

@@ -66,7 +66,7 @@ def detect(image, rgb_filter):
 	return mask, objects
 
 
-def detect_balls(image, rgb_filter = (81, 102, 0, 148, 147, 60)): # (0, 90, 0, 255, 255, 50)
+def detect_balls(image, rgb_filter = (81, 102, 0, 255, 255, 40)): # (0, 90, 0, 255, 255, 50)
 	return detect(image, rgb_filter)
 
 
@@ -106,12 +106,13 @@ def detect_circles(image, rgb_filter, radius_max, radius_min):
 
 def detect_robot(image, lenght_max=10000, lenght_min =0, radius_max=1000, radius_min=0):
 
-	mask_red, circles_red = detect_circles(image, (130, 0, 0, 255, 2, 2), radius_max, radius_min)
-	mask_green, circles_green = detect_circles(image, (0, 130, 0, 2, 255, 2), radius_max, radius_min)
+	mask_red, circles_red = detect_circles(image, (130, 0, 0, 255, 6, 6), radius_max, radius_min)
+	mask_green, circles_green = detect_circles(image, (0, 130, 0, 6, 255, 6), radius_max, radius_min)
 
 	mask = cv2.bitwise_or(mask_green, mask_red)
 	# show_img("mask", mask)
 	# show_img("image", image)
+	# cv2.waitKey(10)
 	robot_pos = None
 
 	if circles_green != [] and circles_red != []:
@@ -184,7 +185,7 @@ if __name__ == "__main__":
 		cv2.circle(frame, (x2, y2), 10, (0, 255, 0), -1)
 
 		ball_img, balls = detect_balls(frame)
-
+		
 		zone_img, zones = detect_zones(frame)
 
 		robot_img, robot = detect_robot(frame)
