@@ -11,12 +11,12 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='false')
-    urdf_file_name = 'urdf/roblochon.urdf.xacro'
+    urdf_file_name = 'urdf/robochon.urdf.xacro'
 
     print("urdf_file_name : {}".format(urdf_file_name))
 
     urdf = os.path.join(
-        get_package_share_directory('roblochon_description'),
+        get_package_share_directory('robochon_description'),
         urdf_file_name)
     tennis_court_share = get_package_share_directory("tennis_court")
     tennis_court_launch_file = os.path.join(
@@ -61,5 +61,5 @@ def generate_launch_description():
             executable='spawn_entity.py',
             name='urdf_spawner',
             output='screen',
-            arguments=["-topic", "/robot_description", "-entity", "roblochon"])
+            arguments=["-topic", "/robot_description", "-entity", "robochon", "-y", "3.0", "-z", "0.2"])
     ])

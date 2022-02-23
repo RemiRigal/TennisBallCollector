@@ -142,7 +142,7 @@
   <xacro:wheel prefix="drivewhl_l" x_reflect="-1" y_reflect="1" />
   <xacro:wheel prefix="drivewhl_r" x_reflect="-1" y_reflect="-1" />
 
-  <!-- Front caster -->
+
   <xacro:macro name="front_caster" params="prefix y_reflect link_daddy">
     <link name="front_caster_${prefix}">
       <visual>
@@ -170,7 +170,7 @@
     <joint name="caster_joint_${prefix}" type="fixed">
       <parent link="${link_daddy}" />
       <child link="front_caster_${prefix}" />
-      <origin xyz="${caster_xoff} ${y_reflect*0.6*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
+      <origin xyz="${caster_xoff} ${y_reflect*0.7*base_width/2} ${-(base_height/2)}" rpy="0 0 0" />
     </joint>
   </xacro:macro>
 
@@ -215,8 +215,8 @@
     </joint>
   </xacro:macro>
 
-  <xacro:gripper prefix="gripper_l" x_reflect="1" y_reflect="1" z_reflect="1" z_rotation="0.15" lenght_x="1" link_daddy="base_link" />
-  <xacro:gripper prefix="gripper_r" x_reflect="1" y_reflect="-1" z_reflect="1" z_rotation="-0.15" lenght_x="1" link_daddy="base_link" />
+  <xacro:gripper prefix="gripper_l" x_reflect="1" y_reflect="1" z_reflect="1" z_rotation="0.3" lenght_x="1" link_daddy="base_link" />
+  <xacro:gripper prefix="gripper_r" x_reflect="1" y_reflect="-1" z_reflect="1" z_rotation="-0.3" lenght_x="1" link_daddy="base_link" />
   <xacro:gripper prefix="gripper_hor" x_reflect="-2" y_reflect="0" z_reflect="1" z_rotation="1.57" lenght_x="0.5" link_daddy="base_link" />
 
 
