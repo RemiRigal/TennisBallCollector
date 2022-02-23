@@ -79,7 +79,7 @@ class TravellingTraj : public rclcpp::Node
         "ball_list", 10, std::bind(&TravellingTraj::topic_callback, this, _1));
       publisher_ = this->create_publisher<geometry_msgs::msg::PoseStamped>("target", 10);
       robot_sub_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(
-        "robot_pos", 10, std::bind(&TravellingTraj::robot_pos_callback, this, _1));
+        "robot_pose", 10, std::bind(&TravellingTraj::robot_pos_callback, this, _1));
     }
 
   private:
