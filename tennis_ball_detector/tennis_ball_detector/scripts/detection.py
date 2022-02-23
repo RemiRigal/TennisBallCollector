@@ -110,7 +110,7 @@ def detect_robot(image, lenght_max=10000, lenght_min =0, radius_max=1000, radius
 	mask_green, circles_green = detect_circles(image, (0, 130, 0, 2, 255, 2), radius_max, radius_min)
 
 	mask = cv2.bitwise_or(mask_green, mask_red)
-	show_img("mask", mask)
+	# show_img("mask", mask)
 	# show_img("image", image)
 	robot_pos = None
 
