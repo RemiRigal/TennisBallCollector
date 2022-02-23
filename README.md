@@ -1,6 +1,5 @@
+### Tennis Ball Collector
 <img src="https://forthebadge.com/images/badges/made-with-python.svg" />
-# Tennis Ball Collector
-
 Ceci est un template de dépôt Git pour le cours d'ingénierie système et modélisation robotique à l'ENSTA Bretagne en 2021.
 
 
@@ -60,49 +59,33 @@ your_folder/
 │
 └───TennisBallCollector/
 │   └───compute_trajectory/
-|   |   └───naolibs/
-|   |   └───naoqi-sdk-2.1.4.13-linux64/
-|   |   └───pynaoqi-python2.7-2.1.4.13-linux64/
-|   |   └───V-REP_PRO_EDU_V3_6_2_Ubuntu18_04/
-│   |    │   vrep.sh
-│   |    │   ...
 |   |
 |   └───docs/
-|   |   └───py/
-|   |   └───scenes/
 |   |
 |   └───interfaces/
 |   |   └───mgs/  *Messages personalisés*
-|   |   └───naosimimgs/
 |   |
-|   └───reports/
-|   |   └───py/
-|   |   └───scenes/
+|   └───reports/  *Rapports PO*
 │   |
 └───ressources/
-|   |
 │   |
 └───roblochon_gazebo/
-|   |
 │   |
-└───robochon_description/
-|   |
+└───robochon_description/  *Description du robot*
+|   |   └───urdf/  *Scripts urdf du robot*
 │   |
 └───sam_bot_description/
-|   |
 │   |
-└───tennis_ball_collector_launch/
+└───tennis_ball_collector_launch/  *Package launch*
+|   |   └───launch/  *Script launch*
 |   |
+└───tennis_ball_detector/ *Packages et fichier liès à la détection des balles*
+|   |   └───ressource/  *Scritps*
+|   |   └───tennis_ball_dectector/ *Package*
 │   |
-└───tennis_ball_detector/
-|   |
+└───tennis_court/  *Monde de la simulation*
 │   |
-└───tennis_court/
-|   |
-│   |
-└───vadrouilleur_description/
-|   |
-│   |
+
 ```
 ### Package `tennis_court`
 
