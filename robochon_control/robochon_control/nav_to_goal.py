@@ -45,8 +45,6 @@ class Navigator(Node):
         self.target_position = PoseStamped()
         self.robot_speed = 0.0
 
-        self.spiral_center = np.zeros((2, 1))
-
         self.command = Twist()
         self.command_pub = self.create_publisher(Twist, "cmd_vel", 10)
 
@@ -82,8 +80,6 @@ class Navigator(Node):
                                  [self.target_position.pose.position.y],
                                  [r[2]]])
 
-        # target_heading = angle(robot_state[:2] - self.spiral_center)
-
         a_matrix = np.array([[-self.robot_speed * np.sin(robot_state[2, 0]), np.cos(robot_state[2, 0])],
                              [self.robot_speed * np.cos(robot_state[2, 0]), np.sin(robot_state[2, 0])]])
 
@@ -99,7 +95,10 @@ class Navigator(Node):
         self.get_logger().info(f"Command = {u}")
 
         self.command.angular.z = u[0, 0]
-        self.command.linear.x += self.main_timer.time_since_last_call() * u[1, 0]
+        # self.command.linear.x = 1.0
+        self.command.linear.x -= self.main_timer.time_since_last_call() * u[1, 0]
+        if abs(self.command.linear.x) > 1:
+            self.command.linear.x = 1.0 * np.sign(self.command.linear.x)
         self.command_pub.publish(self.command)
 
 

@@ -28,6 +28,10 @@ def generate_launch_description():
                                                   {'use_sim_time': use_sim_time}],
                                       arguments=[urdf_file])
 
+    ball_detector_node = Node(package='tennis_ball_detector',
+                              executable='detection_node',
+                              name='detection_node')
+
     spawn_node = Node(package='gazebo_ros',
                       executable='spawn_entity.py',
                       name='urdf_spawner',
@@ -38,4 +42,6 @@ def generate_launch_description():
         sim_time_arg,
         robot_state_publisher_node,
         spawn_node,
+        ball_detector_node,
+
     ])
