@@ -13,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='sam',
-    maintainer_email='samuel.prouten@ensta-bretagne.org',
+    maintainer='anton1',
+    maintainer_email='betaille.antonin@gmail.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'navigator = robochon_control.nav_to_goal:main'
+        	'robot_control = robochon_control.control_test:main',
         ],
     },
 )
